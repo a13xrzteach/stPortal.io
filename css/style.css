@@ -7,6 +7,33 @@ body {
   color: #000000; /* Black text */
 }
 
+/* Logo Styling */
+.logo img {
+  height: 50px; /* Adjust the height to fit the header */
+  width: auto; /* Maintain aspect ratio */
+  display: inline-block;
+  vertical-align: middle; /* Align with the header text */
+  margin-right: 10px; /* Add spacing to the right of the logo */
+}
+
+/* Center Header Content */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* Adds space between logo and welcome text */
+  padding: 20px;
+  background-color: #000000; /* Black header */
+  color: #FFD700; /* Gold text */
+}
+
+header h1 {
+  margin: 0; /* Removes default margin from the welcome text */
+  font-size: 24px;
+}
+
+
+
 /* Header Styles */
 header {
   background-color: #000000; /* Black header */
