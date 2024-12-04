@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #0078D7;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px;
+  align-items: center;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.news {
+  margin: 20px;
+}
+
+footer {
+  background-color: #f4f4f4;
+  text-align: center;
+  padding: 10px;
+}
