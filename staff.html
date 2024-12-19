@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Contact</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Additional Styles for Collapsible Sections */
+    .collapsible {
+      background-color: #FFD700;
+      color: black;
+      cursor: pointer;
+      padding: 10px;
+      border: 1px solid black;
+      text-align: left;
+      outline: none;
+      font-size: 16px;
+      transition: background-color 0.2s ease;
+    }
+
+    .collapsible:hover {
+      background-color: #e0b400;
+    }
+
+    .content {
+      padding: 0 15px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+      background-color: #f9f9f9;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
+    }
+
+    .search-bar {
+      margin: 15px;
+      padding: 10px;
+      width: 90%;
+      max-width: 500px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .staff-card {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fff;
+    }
+
+    .staff-card:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="images/SWMSSLogoGold.png" alt="School Logo">
+    </div>
+    <h1>Teacher Contact</h1>
+  </header>
+
+  <main>
+    <!-- Search Bar -->
+    <input type="text" id="search-bar" class="search-bar" placeholder="Search by name or department...">
+
+    <!-- Placeholder for Collapsible Sections -->
+    <div id="directory-container"></div>
+  </main>
+
+  <footer>
+    <p><a href="mailto:Alexey.Rozenberg@yrdsb.ca">Contact Info</a> | Social Links | FAQ</p>
+  </footer>
+
+  <script>
+    // Fetch and Parse CSV File
+    async function fetchAndRenderCSV() {
+      const response = await fetch('https://raw.githubusercontent.com/yourusername/yourrepositoryname/main/staff.csv');
+      const csvData = await response.text();
+
+      const staffData = parseCSV(csvData);
+      renderDirectory(staffData);
+    }
+
+    // Simple CSV Parser
+    function parseCSV(data) {
+      const lines = data.split('\n');
+      const headers = lines[0].split(',');
+      return lines.slice(1).map(line => {
+        const values = line.split(',');
+        const entry = {};
+        headers.forEach((header, index) => {
+          entry[header.trim()] = values[index]?.trim();
+        });
+        return entry;
+      });
+    }
+
+    // Render Staff Directory
+    function renderDirectory(staffData) {
+      const container = document.getElementById('directory-container');
+
+      const departments = {};
+      staffData.forEach(staff => {
+        const dept = staff.Department || 'Uncategorized';
+        if (!departments[dept]) {
+          departments[dept] = [];
+        }
+        departments[dept].push(staff);
+      });
+
+      Object.keys(departments).forEach(dept => {
+        // Create Collapsible Button
+        const button = document.createElement('button');
+        button.className = 'collapsible';
+        button.textContent = dept;
+
+        // Create Content Section
+        const content = document.createElement('div');
+        content.className = 'content';
+
+        departments[dept].forEach(staff => {
+          const card = document.createElement('div');
+          card.className = 'staff-card';
+          card.innerHTML = `
+            <strong>${staff.Name}</strong><br>
+            ${staff.Role}<br>
+            <a href="mailto:${staff.Email}">${staff.Email}</a>
+          `;
+          content.appendChild(card);
+        });
+
+        container.appendChild(button);
+        container.appendChild(content);
+
+        // Add Collapsible Logic
+        button.addEventListener('click', function () {
+          this.classList.toggle('active');
+          const maxHeight = content.style.maxHeight;
+          content.style.maxHeight = maxHeight ? null : content.scrollHeight + 'px';
+        });
+      });
+    }
+
+    // Filter Functionality for Search Bar
+    document.getElementById('search-bar').addEventListener('input', function () {
+      const query = this.value.toLowerCase();
+      const staffCards = document.querySelectorAll('.staff-card');
+
+      staffCards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+
+    // Fetch and Render on Load
+    fetchAndRenderCSV();
+  </script>
+</body>
+</html>
