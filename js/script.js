@@ -3,7 +3,7 @@ document.getElementById('button1').addEventListener('click', function () {
   window.location.href = 'http://10.242.207.207:5001';
 });
 
-document.getElementById('button1').addEventListener('click', function () {
+document.getElementById('button2').addEventListener('click', function () {
   window.location.href = 'staff.html';
 });
 
