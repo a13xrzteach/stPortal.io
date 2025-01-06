@@ -153,16 +153,41 @@ function renderDirectory(staffData) {
   });
 }
 
-    // Filter Functionality for Search Bar
-    document.getElementById('search-bar').addEventListener('input', function () {
-      const query = this.value.toLowerCase();
-      const staffCards = document.querySelectorAll('.staff-card');
+    // // Filter Functionality for Search Bar
+    // document.getElementById('search-bar').addEventListener('input', function () {
+    //   const query = this.value.toLowerCase();
+    //   const staffCards = document.querySelectorAll('.staff-card');
 
-      staffCards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        card.style.display = text.includes(query) ? '' : 'none';
-      });
+    //   staffCards.forEach(card => {
+    //     const text = card.textContent.toLowerCase();
+    //     card.style.display = text.includes(query) ? '' : 'none';
+    //   });
+    // });
+// Filter Functionality for Search Bar
+document.getElementById('search-bar').addEventListener('input', function () {
+  const query = this.value.toLowerCase(); // Get the search query
+  const collapsibleButtons = document.querySelectorAll('.collapsible');
+  const contentSections = document.querySelectorAll('.content');
+
+  collapsibleButtons.forEach((button, index) => {
+    const content = contentSections[index];
+    const staffCards = content.querySelectorAll('.staff-card');
+    let hasMatch = false;
+
+    staffCards.forEach(card => {
+      const text = card.textContent.toLowerCase(); // Get the text of each card
+      if (text.includes(query)) {
+        card.style.display = ''; // Show matching cards
+        hasMatch = true;
+      } else {
+        card.style.display = 'none'; // Hide non-matching cards
+      }
     });
+
+    // Toggle visibility of department if any match found
+    button.style.display = hasMatch ? '' : 'none';
+  });
+});
 
     // Fetch and Render on Load
     fetchAndRenderCSV();
