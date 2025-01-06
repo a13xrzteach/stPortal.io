@@ -86,19 +86,7 @@
       renderDirectory(staffData);
     }
 
-    // // Simple CSV Parser
-    // function parseCSV(data) {
-    //   const lines = data.split('\n');
-    //   const headers = lines[0].split(',');
-    //   return lines.slice(1).map(line => {
-    //     const values = line.split(',');
-    //     const entry = {};
-    //     headers.forEach((header, index) => {
-    //       entry[header.trim()] = values[index]?.trim();
-    //     });
-    //     return entry;
-    //   });
-    // }
+  
 // Simple CSV Parser
 function parseCSV(data) {
   const lines = data.split('\n').filter(line => line.trim()); // Remove empty lines
@@ -114,55 +102,11 @@ function parseCSV(data) {
     return entry;
   });
 
-  console.log("Parsed CSV Data:", entries); // Debug parsed data
+//  console.log("Parsed CSV Data:", entries); // Debug parsed data
   return entries;
 }
 
-    // // Render Staff Directory
-    // function renderDirectory(staffData) {
-    //   const container = document.getElementById('directory-container');
-
-    //   const departments = {};
-    //   staffData.forEach(staff => {
-    //     const dept = staff.Department || 'Uncategorized';
-    //     if (!departments[dept]) {
-    //       departments[dept] = [];
-    //     }
-    //     departments[dept].push(staff);
-    //   });
-
-    //   Object.keys(departments).forEach(dept => {
-    //     // Create Collapsible Button
-    //     const button = document.createElement('button');
-    //     button.className = 'collapsible';
-    //     button.textContent = dept;
-
-    //     // Create Content Section
-    //     const content = document.createElement('div');
-    //     content.className = 'content';
-
-    //     departments[dept].forEach(staff => {
-    //       const card = document.createElement('div');
-    //       card.className = 'staff-card';
-    //       card.innerHTML = `
-    //         <strong>${staff.Name}</strong><br>
-    //         ${staff.Role}<br>
-    //         <a href="mailto:${staff.Email}">${staff.Email}</a>
-    //       `;
-    //       content.appendChild(card);
-    //     });
-
-    //     container.appendChild(button);
-    //     container.appendChild(content);
-
-    //     // Add Collapsible Logic
-    //     button.addEventListener('click', function () {
-    //       this.classList.toggle('active');
-    //       const maxHeight = content.style.maxHeight;
-    //       content.style.maxHeight = maxHeight ? null : content.scrollHeight + 'px';
-    //     });
-    //   });
-    // }
+   
 function renderDirectory(staffData) {
   const container = document.getElementById('directory-container');
   container.innerHTML = ''; // Clear previous content
@@ -178,7 +122,7 @@ function renderDirectory(staffData) {
   });
 
   // Debug departments grouping
-  console.log("Grouped Departments:", departments);
+//  console.log("Grouped Departments:", departments);
 
   // Render collapsible sections
   Object.keys(departments).forEach(dept => {
