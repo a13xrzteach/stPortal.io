@@ -16,37 +16,45 @@
       }
 
 /* Ensure buttons have consistent width */
-/* .collapsible {
-  width: 80%; /* Set a consistent button width */
-  max-width: 500px; /* Optional: Limit the maximum width */
-  text-align: center; /* Center text inside the button */
-} */
 .collapsible {
-  width: 40%; /* Set button width to 40% of the container */
-  max-width: 250px; /* Optional: Limit maximum width for larger screens */
-  text-align: center; /* Center text inside the button */
-  margin: 10px auto; /* Center the button horizontally and add spacing between buttons */
+  text-align: center;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid black;
   background-color: #FFD700;
   color: black;
   cursor: pointer;
-  padding: 10px;
-  border: 1px solid black;
-  outline: none;
   font-size: 16px;
   transition: background-color 0.2s ease;
+  width: auto; /* Allow buttons to resize dynamically */
+  min-width: 150px; /* Set a reasonable minimum width */
 }
 
-/*     .collapsible {
-      background-color: #FFD700;
-      color: black;
-      cursor: pointer;
-      padding: 10px;
-      border: 1px solid black;
-      text-align: left;
-      outline: none;
-      font-size: 16px;
-      transition: background-color 0.2s ease;
-    } */
+// Equalize Button Widths
+function equalizeButtonWidths() {
+  const buttons = document.querySelectorAll('.collapsible');
+  let maxWidth = 0;
+
+  // Find the widest button
+  buttons.forEach(button => {
+    const buttonWidth = button.offsetWidth;
+    if (buttonWidth > maxWidth) {
+      maxWidth = buttonWidth;
+    }
+  });
+
+  // Apply the max width to all buttons
+  buttons.forEach(button => {
+    button.style.width = `${maxWidth}px`;
+  });
+}
+
+// Run the function after the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  fetchAndRenderCSV(); // Ensure the buttons are created first
+  setTimeout(equalizeButtonWidths, 100); // Wait for buttons to render
+});
+
 
     .collapsible:hover {
       background-color: #e0b400;
