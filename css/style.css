@@ -61,3 +61,32 @@ button {
   font-size: 18px; /* Larger text */
   color: #000000; /* Black text */
   background-color: #FFD700;
+
+
+  footer {
+  background-color: #000000; /* Same black background as header */
+  color: #FFD700; /* Gold text */
+  text-align: center;
+  padding: 20px; /* Same padding as header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Space between logo and text */
+}
+
+footer a {
+  text-decoration: none;
+  color: #FFD700; /* Gold text */
+  font-size: 18px; /* Match text size */
+  font-weight: bold;
+}
+
+footer a:hover {
+  text-decoration: underline; /* Add underline on hover for emphasis */
+}
+
+footer img {
+  height: 50px; /* Same height as the logo in the header */
+  width: auto;
+}
+
