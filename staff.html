@@ -107,6 +107,51 @@ function parseCSV(data) {
 }
 
    
+// function renderDirectory(staffData) {
+//   const container = document.getElementById('directory-container');
+//   container.innerHTML = ''; // Clear previous content
+
+//   // Group staff by department
+//   const departments = {};
+//   staffData.forEach(staff => {
+//     const dept = staff.Department || 'Uncategorized';
+//     if (!departments[dept]) {
+//       departments[dept] = [];
+//     }
+//     departments[dept].push(staff);
+//   });
+
+//   // Debug departments grouping
+// //  console.log("Grouped Departments:", departments);
+
+//   // Render collapsible sections
+//   Object.keys(departments).forEach(dept => {
+//     const button = document.createElement('button');
+//     button.className = 'collapsible';
+//     button.textContent = dept;
+
+//     const content = document.createElement('div');
+//     content.className = 'content';
+
+//     departments[dept].forEach(staff => {
+//       const card = document.createElement('div');
+//       card.className = 'staff-card';
+//       card.innerHTML = `
+//         <strong>${staff.Name}</strong><br>
+//         <a href="mailto:${staff.Email}">${staff.Email}</a>
+//       `;
+//       content.appendChild(card);
+//     });
+
+//     container.appendChild(button);
+//     container.appendChild(content);
+
+//     button.addEventListener('click', function () {
+//       this.classList.toggle('active');
+//       content.style.maxHeight = content.style.maxHeight ? null : `${content.scrollHeight}px`;
+//     });
+//   });
+// }
 function renderDirectory(staffData) {
   const container = document.getElementById('directory-container');
   container.innerHTML = ''; // Clear previous content
@@ -121,11 +166,11 @@ function renderDirectory(staffData) {
     departments[dept].push(staff);
   });
 
-  // Debug departments grouping
-//  console.log("Grouped Departments:", departments);
+  // Sort departments alphabetically
+  const sortedDepartments = Object.keys(departments).sort();
 
   // Render collapsible sections
-  Object.keys(departments).forEach(dept => {
+  sortedDepartments.forEach(dept => {
     const button = document.createElement('button');
     button.className = 'collapsible';
     button.textContent = dept;
