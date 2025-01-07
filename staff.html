@@ -16,13 +16,27 @@
       }
 
 /* Ensure buttons have consistent width */
-.collapsible {
+/* .collapsible {
   width: 80%; /* Set a consistent button width */
   max-width: 500px; /* Optional: Limit the maximum width */
   text-align: center; /* Center text inside the button */
+} */
+.collapsible {
+  width: 40%; /* Set button width to 40% of the container */
+  max-width: 250px; /* Optional: Limit maximum width for larger screens */
+  text-align: center; /* Center text inside the button */
+  margin: 10px auto; /* Center the button horizontally and add spacing between buttons */
+  background-color: #FFD700;
+  color: black;
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid black;
+  outline: none;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
 }
 
-    .collapsible {
+/*     .collapsible {
       background-color: #FFD700;
       color: black;
       cursor: pointer;
@@ -32,7 +46,7 @@
       outline: none;
       font-size: 16px;
       transition: background-color 0.2s ease;
-    }
+    } */
 
     .collapsible:hover {
       background-color: #e0b400;
@@ -81,7 +95,7 @@
 
   <main>
     <!-- Search Bar -->
-    <input type="text" id="search-bar" class="search-bar" placeholder="Search by name or department...">
+    <input type="text" id="search-bar" class="search-bar" placeholder="Search by name ...">
 
     <!-- Placeholder for Collapsible Sections -->
     <div id="directory-container"></div>
@@ -121,52 +135,7 @@ function parseCSV(data) {
   return entries;
 }
 
-   
-// function renderDirectory(staffData) {
-//   const container = document.getElementById('directory-container');
-//   container.innerHTML = ''; // Clear previous content
-
-//   // Group staff by department
-//   const departments = {};
-//   staffData.forEach(staff => {
-//     const dept = staff.Department || 'Uncategorized';
-//     if (!departments[dept]) {
-//       departments[dept] = [];
-//     }
-//     departments[dept].push(staff);
-//   });
-
-//   // Debug departments grouping
-// //  console.log("Grouped Departments:", departments);
-
-//   // Render collapsible sections
-//   Object.keys(departments).forEach(dept => {
-//     const button = document.createElement('button');
-//     button.className = 'collapsible';
-//     button.textContent = dept;
-
-//     const content = document.createElement('div');
-//     content.className = 'content';
-
-//     departments[dept].forEach(staff => {
-//       const card = document.createElement('div');
-//       card.className = 'staff-card';
-//       card.innerHTML = `
-//         <strong>${staff.Name}</strong><br>
-//         <a href="mailto:${staff.Email}">${staff.Email}</a>
-//       `;
-//       content.appendChild(card);
-//     });
-
-//     container.appendChild(button);
-//     container.appendChild(content);
-
-//     button.addEventListener('click', function () {
-//       this.classList.toggle('active');
-//       content.style.maxHeight = content.style.maxHeight ? null : `${content.scrollHeight}px`;
-//     });
-//   });
-// }
+  
 function renderDirectory(staffData) {
   const container = document.getElementById('directory-container');
   container.innerHTML = ''; // Clear previous content
