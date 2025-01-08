@@ -63,7 +63,7 @@ button {
   background-color: #FFD700;
 
 
-  footer {
+footer {
   background-color: #000000; /* Same black background as header */
   color: #FFD700; /* Gold text */
   text-align: center;
@@ -89,4 +89,3 @@ footer img {
   height: 50px; /* Same height as the logo in the header */
   width: auto;
 }
-
