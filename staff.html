@@ -6,55 +6,27 @@
   <title>Teacher Contact</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Additional Styles for Collapsible Sections */
-
     /* Center alignment for department buttons */
-      #directory-container {
-       display: flex;
+    #directory-container {
+      display: flex;
       flex-direction: column;
-        align-items: center;
-      }
-
-/* Ensure buttons have consistent width */
-.collapsible {
-  text-align: center;
-  margin: 10px auto;
-  padding: 10px;
-  border: 1px solid black;
-  background-color: #FFD700;
-  color: black;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.2s ease;
-  width: auto; /* Allow buttons to resize dynamically */
-  min-width: 150px; /* Set a reasonable minimum width */
-}
-
-// Equalize Button Widths
-function equalizeButtonWidths() {
-  const buttons = document.querySelectorAll('.collapsible');
-  let maxWidth = 0;
-
-  // Find the widest button
-  buttons.forEach(button => {
-    const buttonWidth = button.offsetWidth;
-    if (buttonWidth > maxWidth) {
-      maxWidth = buttonWidth;
+      align-items: center;
     }
-  });
 
-  // Apply the max width to all buttons
-  buttons.forEach(button => {
-    button.style.width = `${maxWidth}px`;
-  });
-}
-
-// Run the function after the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  fetchAndRenderCSV(); // Ensure the buttons are created first
-  setTimeout(equalizeButtonWidths, 100); // Wait for buttons to render
-});
-
+    /* Ensure buttons have consistent width */
+    .collapsible {
+      text-align: center;
+      margin: 10px auto;
+      padding: 10px;
+      border: 1px solid black;
+      background-color: #FFD700;
+      color: black;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.2s ease;
+      width: auto; /* Allow buttons to resize dynamically */
+      min-width: 150px; /* Set a reasonable minimum width */
+    }
 
     .collapsible:hover {
       background-color: #e0b400;
@@ -91,6 +63,32 @@ document.addEventListener('DOMContentLoaded', () => {
     .staff-card:hover {
       background-color: #f1f1f1;
     }
+
+    footer {
+      background-color: #000000; /* Same black background as header */
+      color: #FFD700; /* Gold text */
+      text-align: center;
+      padding: 20px; /* Same padding as header */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px; /* Space between logo and text */
+    }
+
+    footer a {
+      text-decoration: none;
+      color: #FFD700; /* Gold text */
+      font-size: 18px; /* Match text size */
+      font-weight: bold;
+      display: flex; /* Align logo and text inline */
+      align-items: center;
+    }
+
+    footer img {
+      height: 50px; /* Same height as the logo in the header */
+      width: auto; /* Maintain aspect ratio */
+      margin-right: 10px; /* Space between logo and text */
+    }
   </style>
 </head>
 <body>
@@ -110,10 +108,32 @@ document.addEventListener('DOMContentLoaded', () => {
   </main>
 
   <footer>
-    <p><a href="mailto:Alexey.Rozenberg@yrdsb.ca">Contact Info</a> | Social Links | FAQ</p>
+    <a href="index.html">
+      <img src="images/SWMSSLogoGold.png" alt="School Logo">
+      Back to Portal
+    </a>
   </footer>
 
   <script>
+    // Equalize Button Widths
+    function equalizeButtonWidths() {
+      const buttons = document.querySelectorAll('.collapsible');
+      let maxWidth = 0;
+
+      // Find the widest button
+      buttons.forEach(button => {
+        const buttonWidth = button.offsetWidth;
+        if (buttonWidth > maxWidth) {
+          maxWidth = buttonWidth;
+        }
+      });
+
+      // Apply the max width to all buttons
+      buttons.forEach(button => {
+        button.style.width = `${maxWidth}px`;
+      });
+    }
+
     // Fetch and Parse CSV File
     async function fetchAndRenderCSV() {
       const response = await fetch('files/swmssStaffList.csv');
@@ -121,111 +141,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const staffData = parseCSV(csvData);
       renderDirectory(staffData);
+      equalizeButtonWidths();
     }
 
-  
-// Simple CSV Parser
-function parseCSV(data) {
-  const lines = data.split('\n').filter(line => line.trim()); // Remove empty lines
-  const headers = lines[0].split(',');
+    // Simple CSV Parser
+    function parseCSV(data) {
+      const lines = data.split('\n').filter(line => line.trim());
+      const headers = lines[0].split(',');
 
-  // Map data into structured format
-  const entries = lines.slice(1).map(line => {
-    const values = line.split(',');
-    const entry = {};
-    headers.forEach((header, index) => {
-      entry[header.trim()] = values[index]?.trim();
-    });
-    return entry;
-  });
-
-//  console.log("Parsed CSV Data:", entries); // Debug parsed data
-  return entries;
-}
-
-  
-function renderDirectory(staffData) {
-  const container = document.getElementById('directory-container');
-  container.innerHTML = ''; // Clear previous content
-
-  // Group staff by department
-  const departments = {};
-  staffData.forEach(staff => {
-    const dept = staff.Department || 'Uncategorized';
-    if (!departments[dept]) {
-      departments[dept] = [];
+      return lines.slice(1).map(line => {
+        const values = line.split(',');
+        const entry = {};
+        headers.forEach((header, index) => {
+          entry[header.trim()] = values[index]?.trim();
+        });
+        return entry;
+      });
     }
-    departments[dept].push(staff);
-  });
 
-  // Sort departments alphabetically
-  const sortedDepartments = Object.keys(departments).sort();
+    function renderDirectory(staffData) {
+      const container = document.getElementById('directory-container');
+      container.innerHTML = '';
 
-  // Render collapsible sections
-  sortedDepartments.forEach(dept => {
-    const button = document.createElement('button');
-    button.className = 'collapsible';
-    button.textContent = dept;
+      const departments = {};
+      staffData.forEach(staff => {
+        const dept = staff.Department || 'Uncategorized';
+        if (!departments[dept]) {
+          departments[dept] = [];
+        }
+        departments[dept].push(staff);
+      });
 
-    const content = document.createElement('div');
-    content.className = 'content';
+      const sortedDepartments = Object.keys(departments).sort();
 
-    departments[dept].forEach(staff => {
-      const card = document.createElement('div');
-      card.className = 'staff-card';
-      card.innerHTML = `
-        <strong>${staff.Name}</strong><br>
-        <a href="mailto:${staff.Email}">${staff.Email}</a>
-      `;
-      content.appendChild(card);
-    });
+      sortedDepartments.forEach(dept => {
+        const button = document.createElement('button');
+        button.className = 'collapsible';
+        button.textContent = dept;
 
-    container.appendChild(button);
-    container.appendChild(content);
+        const content = document.createElement('div');
+        content.className = 'content';
 
-    button.addEventListener('click', function () {
-      this.classList.toggle('active');
-      content.style.maxHeight = content.style.maxHeight ? null : `${content.scrollHeight}px`;
-    });
-  });
-}
+        departments[dept].forEach(staff => {
+          const card = document.createElement('div');
+          card.className = 'staff-card';
+          card.innerHTML = `
+            <strong>${staff.Name}</strong><br>
+            <a href="mailto:${staff.Email}">${staff.Email}</a>
+          `;
+          content.appendChild(card);
+        });
 
+        container.appendChild(button);
+        container.appendChild(content);
 
-// Filter Functionality for Search Bar
-document.getElementById('search-bar').addEventListener('input', function () {
-  const query = this.value.toLowerCase(); // Get the search query
-  const collapsibleButtons = document.querySelectorAll('.collapsible');
-  const contentSections = document.querySelectorAll('.content');
+        button.addEventListener('click', function () {
+          this.classList.toggle('active');
+          content.style.maxHeight = content.style.maxHeight ? null : `${content.scrollHeight}px`;
+        });
+      });
+    }
 
-  collapsibleButtons.forEach((button, index) => {
-    const content = contentSections[index];
-    const staffCards = content.querySelectorAll('.staff-card');
-    let hasMatch = false;
-
-    staffCards.forEach(card => {
-      const text = card.textContent.toLowerCase(); // Get the text of each card
-      if (text.includes(query)) {
-        card.style.display = ''; // Show matching cards
-        hasMatch = true;
-      } else {
-        card.style.display = 'none'; // Hide non-matching cards
-      }
-    });
-
-    // Toggle visibility of department if any match found
-    button.style.display = hasMatch ? '' : 'none';
-  });
-});
-
-    // Fetch and Render on Load
-    fetchAndRenderCSV();
+    document.addEventListener('DOMContentLoaded', fetchAndRenderCSV);
   </script>
-   <footer>
-  <a href="index.html">
-    <img src="images/SWMSSLogoGold.png" alt="School Logo">
-    Back to Portal
-  </a>
-</footer>
 </body>
-
 </html>
