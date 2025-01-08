@@ -119,22 +119,31 @@
             color: #666;
         }
 
-        footer {
-            background-color: #000000;
-            color: #FFD700;
-            text-align: center;
-            padding: 20px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+       footer {
+      background-color: #000000; /* Same black background as header */
+      color: #FFD700; /* Gold text */
+      text-align: center;
+      padding: 20px; /* Same padding as header */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px; /* Space between logo and text */
+    }
 
-        footer a {
-            text-decoration: none;
-            color: #FFD700;
-            font-size: 18px;
-            font-weight: bold;
-        }
+    footer a {
+      text-decoration: none;
+      color: #FFD700; /* Gold text */
+      font-size: 18px; /* Match text size */
+      font-weight: bold;
+      display: flex; /* Align logo and text inline */
+      align-items: center;
+    }
+
+    footer img {
+      height: 50px; /* Same height as the logo in the header */
+      width: auto; /* Maintain aspect ratio */
+      margin-right: 10px; /* Space between logo and text */
+    }
     </style>
 </head>
 <body>
