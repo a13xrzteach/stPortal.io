@@ -1,0 +1,16 @@
+{
+    "Holiday" : {
+        "Labour day" : "2024-09-2",
+        "Thanksgiving" : "2024-10-14",
+        "Winter Break" : "",
+        "Family Day" : "2025-02-17",
+        "Good Friday" : "2025-04-18",
+        "Easter Monday" : "2025-04-21"
+    },
+    "PA Day" : {
+        
+    },
+    "Long Breaks" : {
+        "Winter Break" : []
+    }
+}
