@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calender</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .date-picker-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    #datepicker {
+      padding: 8px;
+      font-size: 16px;
+    }
+    .week-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .day-box {
+      flex: 1;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      min-height: 150px;
+      background-color: #f9f9f9;
+    }
+    .day-header {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ddd;
+    }
+    .current-day {
+      background-color: #e6f7ff;
+      border-color: #1890ff;
+    }
+    .day-date {
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
+</head>
+<header>
+    <h1>
+        Calender
+    </h1>
+</header>
+<body>
+    <div class="date-picker-container">
+        <input id="datepicker" type="date">
+      </div>
+    <div id = "calender">
+
+    </div>
+</body>
+<script>
+  const datePicker = document.getElementById('datepicker');
+  const calendarDiv = document.getElementById('calender');
+  function fetchData() {
+    fetch("files/dates.json")
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();  
+      })
+      .catch(error => console.error('Failed to fetch data:', error)); 
+  }
+  function generateWeekFromDate(date, data) {
+      calendarDiv.innerHTML = '';
+      
+      const weekContainer = document.createElement('div');
+      weekContainer.className = 'week-container';
+      
+      // Find the first day of the week (Sunday)
+      const firstDayOfWeek = new Date(date);
+      const day = date.getDay(); //Starts at Sunday --> 0
+      firstDayOfWeek.setDate(date.getDate() - day);
+      
+      for (let i = 0; i < 7; i++) {
+        const currentDate = new Date(firstDayOfWeek);
+        currentDate.setDate(firstDayOfWeek.getDate() + i);
+        
+        const dayBox = document.createElement('div');
+        dayBox.className = 'day-box';
+        
+        // Check if this is the selected day
+        if (currentDate.toDateString() === date.toDateString()) {
+          dayBox.classList.add('current-day');
+        }
+        
+        const dayHeader = document.createElement('div');
+        dayHeader.className = 'day-header';
+        
+        const dayName = document.createElement('div');
+        dayName.textContent = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][currentDate.getDay()];
+        
+        const dayDate = document.createElement('div');
+        dayDate.className = 'day-date';
+        dayDate.textContent = currentDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        
+        dayHeader.appendChild(dayName);
+        dayHeader.appendChild(dayDate);
+        dayBox.appendChild(dayHeader);
+        
+        weekContainer.appendChild(dayBox);
+      }
+      
+      calendarDiv.appendChild(weekContainer);
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    var data = fetchData();
+    console.log(data);
+    
+    // Set date picker to today's date
+    const today = new Date();
+    datePicker.valueAsDate = today;
+    
+    generateWeekFromDate(today, data);
+    
+    // Update week when date is changed
+    datePicker.addEventListener('change', function() {
+      const selectedDate = new Date(this.value);
+      generateWeekFromDate(selectedDate);
+    });
+  });
+  </script>
+</html>
