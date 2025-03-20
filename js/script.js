@@ -11,4 +11,8 @@ document.getElementById('button3').addEventListener('click', function () {
   window.location.href = 'guidance-chat.html';
 });
 
+document.getElementById('button4').addEventListener('click', function () {
+  window.location.href = 'calender.html';
+});
+
 // Repeat for other buttons
